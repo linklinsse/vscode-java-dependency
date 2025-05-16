@@ -38,7 +38,15 @@ export class HierarchicalPackageRootNode extends PackageRootNode {
                     // in that case, we will skip it.
                     packageData.push(nodeData);
                 } else {
-                    result.push(NodeFactory.createNode(nodeData, this, this._project, this));
+                    const matchHiddenPatern: boolean = Settings.getHiddenNodesPatern()
+                        .some((pattern: string) => {
+                            const regex = new RegExp(`^${pattern}$`);
+                            return regex.test(nodeData.name);
+                        })
+                    if (!matchHiddenPatern) {
+                        // We filter the node by name
+                        result.push(NodeFactory.createNode(nodeData, this, this._project, this));
+                    }
                 }
             });
         }

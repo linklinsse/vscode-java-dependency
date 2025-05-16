@@ -119,6 +119,10 @@ export class Settings {
     public static nonJavaResourcesFiltered(): boolean {
         return !workspace.getConfiguration("java.project.explorer").get<boolean>("showNonJavaResources", true);
     }
+
+    public static getHiddenNodesPatern(): string[] {
+        return workspace.getConfiguration("java.project.explorer").get<string[]>("hiddenNodesPatern", [])
+    }
 }
 
 enum PackagePresentation {
